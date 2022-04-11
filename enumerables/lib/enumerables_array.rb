@@ -1,4 +1,4 @@
-
+require 'byebug'
 # #factors
 # returns factors of 10 in order (FAILED - 1)
 # returns just two factors for primes (FAILED - 2)
@@ -104,11 +104,33 @@ class Array
         
         (0...self.length).each do |i|
             final[i].push(self[i])
-            
         end
 
-    end
+        args.each do |subarr|
+            (0...self.length).each do |k|
+                if k >= self.length
+                    final[k].push(nil) 
+                else 
+                    final[k].push(subarr[k])
+                end
+            end
+        end
+        final
+            
+    end 
 
+    # Write a method my_rotate that returns a new array containing all the elements of the original array in a rotated order. 
+    # By default, the array should rotate by one element. 
+    # If a negative value is given, the array is rotated in the opposite direction.
+    def my_rotate(int = 1)
+        new_arr = self.dup
+        if int > 0
+            (0...int).each { |what| new_arr.push(new_arr.shift()) }
+        elsif int < 0
+            (0...int * -1).each { |what| new_arr.unshift(new_arr.pop()) }
+        end
+        return new_arr
+    end
 # #my_inject
 #   calls the block passed to it (FAILED - 28)
 #   makes the first element the accumulator if no default is given (FAILED - 29)
