@@ -1,28 +1,7 @@
 require 'byebug'
-# #factors
-# returns factors of 10 in order (FAILED - 1)
-# returns just two factors for primes (FAILED - 2)
 
-
-# #subwords
-# can find a simple word (FAILED - 3)
-# doesn't find spurious words (FAILED - 4)
-# can find words within words (FAILED - 5)
-
-# #doubler
-# doubles the elements of the array (FAILED - 6)
-# does not modify the original array (FAILED - 7)
 
 class Array
-# #bubble_sort!
-#   works with an empty array (FAILED - 8)
-#   works with an array of one item (FAILED - 9)
-#   sorts numbers (FAILED - 10)
-#   modifies the original array (FAILED - 11)
-#   will use a block if given (FAILED - 12)
-# #bubble_sort
-#   delegates to #bubble_sort! (FAILED - 13)
-#   does not modify the original array (FAILED - 14)
 
     # my_flatten should return all elements of the array into a new, one-dimensional array. Hint: use recursion!
     def my_flatten(dimensional_array)
@@ -41,12 +20,6 @@ class Array
         return self
     end
 
-# #my_map
-#   calls the block passed to it (FAILED - 19)
-#   yields each element to the block (FAILED - 20)
-#   runs the block for each element (FAILED - 21)
-#   does NOT call the built in built-in #map method (FAILED - 22)
-#   is chainable and returns a new array (FAILED - 23)
 
     def my_select(&prc)
         new_arr = []
@@ -80,24 +53,6 @@ class Array
         end
         return true
     end
-
-#my_zip
-    # Write my_zip to take any number of arguments. 
-    # It should return a new array containing self.length elements. 
-    # Each element of the new array should be an array with a length of the 
-    # input arguments + 1 and contain the merged elements at that index. 
-    # If the size of any argument is less than self, nil is returned for 
-    # that location.
-
-#     a = [ 4, 5, 6 ]
-# b = [ 7, 8, 9 ]
-# [1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
-# a.my_zip([1,2], [8])   # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
-# [1, 2].my_zip(a, b)    # => [[1, 4, 7], [2, 5, 8]]
-
-# c = [10, 11, 12]
-# d = [13, 14, 15]
-# [1, 2].my_zip(a, b, c, d)    # => [[1, 4, 7, 10, 13], [2, 5, 8, 11, 14]]
     
     def my_zip(*args)
         final = Array.new(self.length) { Array.new() }
@@ -140,9 +95,8 @@ class Array
         end
         string 
     end
-    # Write a method my_rotate that returns a new array containing all the elements of the original array in a rotated order. 
-    # By default, the array should rotate by one element. 
-    # If a negative value is given, the array is rotated in the opposite direction.
+
+
     def my_rotate(int = 1)
         new_arr = self.dup
         if int > 0
@@ -154,22 +108,51 @@ class Array
     end
 
     def my_map(&prc)
+        dupe_array = []
+        self.each do |ele|
+            dupe_array.push(prc.call(ele))
+        end
+        dupe_array
     end
-  
-    def my_inject(&blk)
+
+    #   #my_inject
+    #   calls the block passed to it (FAILED - 2)
+    #   makes the first element the accumulator if no default is given (FAILED - 3)
+    #   yields the accumulator and each element to the block (FAILED - 4)
+    #   does NOT call the built-in #inject method
+    #   is chainable and returns a new array
+    def my_inject(&prc)
+        new_arr = []
+        acc = self[0]
+        ##acc = self[0]
+        self.each do |ele|
+            prc.call(ele)
+        end
+        new_arr
     end
-  
+    
+
     def bubble_sort!(&prc)
+        prc ||= Proc.new { |a, b| a <=> b }
+        is_sorted = false
+
+        while !is_sorted
+            is_sorted = true
+            (0...self.length - 1).each do |i|
+                if prc.call(self[i], self[i+1]) == 1
+                    is_sorted = false
+                    self[i], self[i+1] = self[i+1], self[i]
+                end
+            end
+        end
+        self
     end
   
     def bubble_sort(&prc)
+        temp = self.dup
+        temp.bubble_sort!(&prc)
     end
-# #my_inject
-#   calls the block passed to it (FAILED - 28)
-#   makes the first element the accumulator if no default is given (FAILED - 29)
-#   yields the accumulator and each element to the block (FAILED - 30)
-#   does NOT call the built-in #inject method (FAILED - 31)
-#   is chainable and returns a new array (FAILED - 32)
+
 end
 
 # #concatenate
@@ -181,7 +164,7 @@ end
 def factors(num)
     arr = []
   
-    (2..num).each do |number|
+    (1..num).each do |number|
       arr << number if num % number == 0
     end
     arr
@@ -201,17 +184,11 @@ end
 def substrings(string)
     arr = []
     str = ""
-   
-    string.each_char.with_index do |char1, idx1|
-        arr << char1 
-        str += char1
-        string.each_char.with_index do |char2, idx2|
-            if idx2 > idx1
-                str += char2
-                arr << str
-            end
+    
+    (0...string.length).each do |i|
+        (0...string.length).each do |k|
+            arr.push(string[i..k]) if !arr.include?(string[i..k])
         end
-        str = ""
     end
     arr
 end
