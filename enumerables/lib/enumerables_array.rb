@@ -81,6 +81,34 @@ class Array
         return true
     end
 
+#my_zip
+    # Write my_zip to take any number of arguments. 
+    # It should return a new array containing self.length elements. 
+    # Each element of the new array should be an array with a length of the 
+    # input arguments + 1 and contain the merged elements at that index. 
+    # If the size of any argument is less than self, nil is returned for 
+    # that location.
+
+#     a = [ 4, 5, 6 ]
+# b = [ 7, 8, 9 ]
+# [1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+# a.my_zip([1,2], [8])   # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
+# [1, 2].my_zip(a, b)    # => [[1, 4, 7], [2, 5, 8]]
+
+# c = [10, 11, 12]
+# d = [13, 14, 15]
+# [1, 2].my_zip(a, b, c, d)    # => [[1, 4, 7, 10, 13], [2, 5, 8, 11, 14]]
+    
+    def my_zip(*args)
+        final = Array.new(self.length) { Array.new() }
+        
+        (0...self.length).each do |i|
+            final[i].push(self[i])
+            
+        end
+
+    end
+
 # #my_inject
 #   calls the block passed to it (FAILED - 28)
 #   makes the first element the accumulator if no default is given (FAILED - 29)
@@ -93,3 +121,5 @@ end
 # returns the concatenation of the strings passed in (FAILED - 33)
 # does not modify the original strings (FAILED - 34)
 # uses the Array#inject method (FAILED - 35)
+
+
