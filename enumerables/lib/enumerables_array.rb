@@ -116,9 +116,30 @@ class Array
             end
         end
         final
-            
     end 
 
+
+
+    def my_reverse
+        dup_self = self.dup
+        new_arr = []
+
+        self.each do |ele|
+            new_arr.push(dup_self.pop())
+        end
+        new_arr
+    end
+
+
+    def my_join(separator= "")
+        string = ""
+
+        self.each_with_index do |ele,i|
+            string += ele
+            string += separator if i != self.length - 1
+        end
+        string 
+    end
     # Write a method my_rotate that returns a new array containing all the elements of the original array in a rotated order. 
     # By default, the array should rotate by one element. 
     # If a negative value is given, the array is rotated in the opposite direction.
