@@ -152,6 +152,18 @@ class Array
         end
         return new_arr
     end
+
+    def my_map(&prc)
+    end
+  
+    def my_inject(&blk)
+    end
+  
+    def bubble_sort!(&prc)
+    end
+  
+    def bubble_sort(&prc)
+    end
 # #my_inject
 #   calls the block passed to it (FAILED - 28)
 #   makes the first element the accumulator if no default is given (FAILED - 29)
@@ -166,3 +178,45 @@ end
 # uses the Array#inject method (FAILED - 35)
 
 
+def factors(num)
+    arr = []
+  
+    (2..num).each do |number|
+      arr << number if num % number == 0
+    end
+    arr
+end
+
+
+def doubler(array)
+    array.map { |ele| ele * 2 }
+end
+
+
+def subwords(word, dictionary)
+    substrings(word).select { |substr| dictionary.include?(substr) }
+end
+
+
+def substrings(string)
+    arr = []
+    str = ""
+   
+    string.each_char.with_index do |char1, idx1|
+        arr << char1 
+        str += char1
+        string.each_char.with_index do |char2, idx2|
+            if idx2 > idx1
+                str += char2
+                arr << str
+            end
+        end
+        str = ""
+    end
+    arr
+end
+
+
+def concatenate(strings)
+    strings.inject { |acc,str| acc += str }
+end
